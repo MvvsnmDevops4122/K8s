@@ -1,137 +1,119 @@
-🚀 Kubernetes — Introduction & Features
-=======================================
+# 🚀 Kubernetes — Introduction & Features
 
-* Kubernetes (often abbreviated as K8s) is an open-source container orchestration platform/Engine  that automates 
+**Kubernetes (often abbreviated as K8s)** is an open-source container orchestration platform/engine  
+that automates the deployment, scaling, and management of containerized applications.
 
-  the deployment, scaling, and management of containerized applications.
+---
 
+## 🧭 Container Orchestration Engine
 
-Container Orchestration Engine:  
-------------------------------
+Kubernetes manages clusters of containers, ensuring the application runs consistently across different environments.
 
-* Kubernetes manages clusters of containers, ensuring the application runs consistently across different environments.
+### ⚙️ Key Responsibilities
 
-⚙️ Key Responsibilities:
-------------------------
+- Container deployment  
+- Scaling & descaling  
+- Load balancing of containers  
 
-* Container deployment
+---
 
-* Scaling & descaling
+## 📜 History
 
-* Load balancing of containers
+- Developed by Google  
+- Written in Go/Golang  
+- Donated to CNCF (Cloud Native Computing Foundation) in 2014  
+- Kubernetes v1.0 was released on July 21, 2015  
+- Current stable release: **v1.31**
 
-📜 History:
------------
+---
 
-++ Developed by Google
+# ✨ Kubernetes Key Features
 
-++ Written in Go/Golang
+## 1. Automated Scheduling
 
-++ Donated to CNCF (Cloud Native Computing Foundation) in 2014
+Kubernetes provides an advanced scheduler to launch containers on cluster nodes. It performs resource optimization.
 
-++ Kubernetes v1.0 was released on July 21, 2015
+## 2. Self-Healing Capabilities
 
-++ Current stable release: v1.31
+It provides rescheduling, replacing, and restarting of containers that are dead or unresponsive.
 
+## 3. Automated Rollouts and Rollbacks
 
-✨Kubernetes Key Features
-==========================
+Supports rollouts and rollbacks to maintain the desired state of containerized applications.
 
-1. Automated Scheduling
-------------------------
+## 4. Horizontal Scaling
 
-* Kubernetes provides an advanced scheduler to launch containers on cluster nodes. It performs resource optimization.
+Kubernetes can scale applications up or down based on demand.
 
-2. Self-Healing Capabilities
-----------------------------
+## 5. Service Discovery & Load Balancing
 
-* It provides rescheduling, replacing, and restarting the containers that are dead.
+Exposes containers using DNS names or IPs and distributes traffic across them.
 
+## 6. Multi-Cloud & Hybrid Cloud Support
 
-3. Automated Rollouts and Rollbacks
------------------------------------
+Can be deployed across various cloud platforms and supports hybrid cloud environments.
 
-* It supports rollouts and rollbacks for the desired state of the containerized application.
+## 7. Storage Orchestration
 
+- Supports mounting local or cloud provider storage (e.g., AWS EBS, GCP Persistent Disks)  
+- Compatible with NFS, iSCSI, and more
 
-4. Horizontal Scaling 
-----------------------
+## 8. Community Support
 
-* Kubernetes can scale up and scale down the application as per the requirements.
+Large and active community with frequent updates, bug fixes, and feature enhancements.
 
+---
 
-5.Service Discovery & Load Balancing:
------------------------------------
+# 🏗️ Kubernetes Architecture Overview
 
-* Exposes containers using DNS names or IPs and distributes traffic.
+## Two Main Components
 
-6. Support for multiple clouds and hybrid clouds
-------------------------------------------------
+---
 
-* Kubernetes can be deployed on different cloud platforms and run containerized applications across multiple clouds.
+## 🛠️ 1. Control Plane (Master)
 
-7. Storage Orchestration
--------------------------
+### `kube-apiserver`
 
-* Kubernetes supports mounting local storage or cloud provider storage (e.g., AWS EBS, GCP Persistent Disks)
+- Front-end for the Kubernetes control plane  
+- Accepts REST API commands (from `kubectl`, UIs, or other tools) and validates requests
 
-* Supports NFS, iSCSI, etc.
+### `etcd`
 
+- Key-value store that holds all cluster data
 
-8. Community Support
---------------------
+### `kube-scheduler`
 
-* Kubernetes has a large and active community with frequent updates, bug fixes, and new features being added.
+- Assigns unscheduled Pods to Nodes based on resource requirements, constraints, and policies
 
+### `kube-controller-manager`
 
-Kubernetes Architecture Overview
-=================================
+- Runs core controllers (Node, Replication, Endpoint, Namespace, ServiceAccount, etc.)  
+- Ensures desired state matches actual state
 
-Two Main Components:
+### `cloud-controller-manager`
 
-🛠️ 1. Control Plane (Master)
-============================
+- Integrates with cloud provider APIs (AWS, Azure, GCP)  
+- Manages cloud-specific resources like load balancers and storage
 
-kube-apiserver: 
---------------- 
+---
 
-*  The front-end for the Kubernetes control plane. Accepts REST API commands (from kubectl, UIs, or other tools) and validates requests.
+## ⚙️ 2. Node Components (Workers of the Cluster)
 
-etcd:
---------------
+### `kubelet`
 
-*  Key-value store that holds all cluster data
+- Agent running on each node  
+- Communicates with the control plane
 
-kube-scheduler:
----------------
+### `kube-proxy`
 
-* Assigns unscheduled Pods to Nodes based on resource requirements, constraints, and policies.
+- Maintains network rules  
+- Enables service-to-pod communication inside and outside the cluster
 
-kube-controller-manager
------------------------
+### Pods
 
-* Runs core controllers (Node, Replication, Endpoint, Namespace, ServiceAccount, etc.); ensures desired state matches actual state.
+- Smallest deployable units in Kubernetes  
+- Contain one or more containers
 
-cloud-controller-manager:
--------------------------
+### CRI (Container Runtime Interface)
 
-* Integrates with cloud provider APIs (AWS, Azure, GCP) to manage cloud-specific resources (load balancers, storage, etc.).
-
-
-2. Node Components (Workers of the cluster)
-===========================================
-
- kubelet: Agent running on each node; communicates with the control plane
- -------
-
-
- kube-proxy: Maintains network rules and enables service-to-pod communication inside and outside the cluster.
- -----------
-
-
- Pods: Smallest deployable units in Kubernetes; contain one or more containers
- ----
-
- CRI (Container Runtime Interface): Interface between kubelet and container runtime (e.g., containerd, Docker)
- ----------------------------------
-
+- Interface between `kubelet` and container runtime (e.g., `containerd`, Docker)
