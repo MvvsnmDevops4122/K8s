@@ -1,8 +1,4 @@
-Perfect ✅ Let me give you the **clear and complete GitHub `README.md` file** — formatted, structured, and ready to copy-paste into your repo.
 
----
-
-````markdown
 # 🌐 LAB: Hostinger Domain → AWS Route 53 → EC2 (Apache Web Server)
 
 This guide walks through setting up a website using a **Hostinger domain**, **AWS Route 53**, and an **EC2 instance with Apache**.
@@ -24,9 +20,9 @@ This guide walks through setting up a website using a **Hostinger domain**, **AW
    - Allow **TCP 22 (SSH)** – only from your IP  
 
 4. **SSH into EC2**  
-   ```bash
+  
    ssh -i my-key.pem ubuntu@<Elastic-IP>
-````
+
 
 ---
 
@@ -199,15 +195,3 @@ Website Content (HTML / App)
 * **SSL setup failed?**
   → Check domain points correctly to EC2 before running `certbot`.
 
----
-
-✅ Now you have a **ready-to-deploy website setup guide** with Hostinger + AWS.
-
-```
-
----
-
-👉 This is the **clear final version** — just copy it into your repo as `README.md`.  
-
-Would you like me to also create a **diagram image (PNG)** of the flow (Browser → Domain → Route 53 → EC2 → Apache)? It would look nice in the GitHub README.
-```
