@@ -3,7 +3,7 @@
 
 This lab demonstrates how to host a website using a **Hostinger domain**, **AWS Route 53 DNS**, and an **EC2 instance running Apache**.
 
-
+---
 
 ## 1️⃣ Purchase Domain & Prepare EC2
 
@@ -24,7 +24,7 @@ This lab demonstrates how to host a website using a **Hostinger domain**, **AWS 
    ssh -i my-key.pem ubuntu@<Elastic-IP>
 ````
 
-
+---
 
 ## 2️⃣ Install Apache Web Server
 
@@ -37,8 +37,7 @@ sudo systemctl start apache2
 
 ✅ Test by opening `http://<Elastic-IP>` in a browser — Apache default page should appear.
 
-
-
+---
 
 ## 3️⃣ Configure Route 53 Hosted Zone
 
@@ -55,8 +54,7 @@ sudo systemctl start apache2
 2. Select **Custom nameservers** and paste the Route 53 NS records.
 3. Ensure **DNSSEC is turned off** to avoid propagation issues.
 
-
-
+---
 
 ## 5️⃣ Add A Records in Route 53
 
@@ -72,8 +70,7 @@ sudo systemctl start apache2
 
 *TTL can remain default (300).*
 
-
-
+---
 
 ## 6️⃣ Check DNS Resolution
 
@@ -84,8 +81,7 @@ nslookup www.kkdevopsb4.shop 8.8.8.8
 
 ✅ Both should return your Elastic IP.
 
-
-
+---
 
 ## 7️⃣ Deploy Your Website
 
@@ -148,7 +144,7 @@ Check your site:
 * `http://kkdevopsb4.shop`
 * `http://www.kkdevopsb4.shop`
 
-
+---
 
 ## 8️⃣ Enable HTTPS (Optional)
 
@@ -161,8 +157,7 @@ sudo certbot --apache -d kkdevopsb4.shop -d www.kkdevopsb4.shop
 
 ✅ Free SSL via **Let’s Encrypt** with auto-renewal.
 
-
-
+---
 
 ## 9️⃣ Architecture Overview
 
@@ -183,11 +178,15 @@ EC2 Instance (Apache)
 Website Content (HTML / App)
 ```
 
-
-
+---
 
 ## 10️⃣ Quick Troubleshooting
 
 * **DNS issues**: Confirm Hostinger nameservers match Route 53, disable DNSSEC, allow propagation (\~30 mins).
 * **Apache not loading**: Check port 80 is open in the Security Group and Apache is running.
 * **SSL errors**: Ensure domain resolves correctly before running Certbot.
+
+```
+
+---
+
