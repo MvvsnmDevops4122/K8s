@@ -20,7 +20,6 @@
    ssh -i my-key.pem ubuntu@<Elastic-IP>
 ````
 
----
 
 ## Part 2 – Install Apache Web Server
 
@@ -33,7 +32,7 @@ sudo systemctl start apache2
 
 ✅ Test in browser → `http://<Elastic-IP>` → You should see Apache2 Default Page.
 
----
+
 
 ## Part 3 – Create Hosted Zone in Route 53
 
@@ -51,7 +50,7 @@ sudo systemctl start apache2
 2. Select **Use custom nameservers** → Paste 4 values from Route 53
 3. Disable **DNSSEC** (important).
 
----
+
 
 ## Part 5 – Create A Records in Route 53
 
@@ -69,7 +68,7 @@ sudo systemctl start apache2
   * Value: `<Elastic-IP>`
   * TTL: 300
 
----
+
 
 ## Part 6 – Verify DNS
 
@@ -138,7 +137,7 @@ Example HTML page:
 </html>
 ```
 
----
+
 
 ## Part 8 – Enable HTTPS (Optional)
 
@@ -151,7 +150,7 @@ sudo certbot --apache -d kkdevopsb4.shop -d www.kkdevopsb4.shop
 
 ✅ SSL will auto-renew.
 
----
+
 
 ## 🔄 Final Flow Diagram (Simplified)
 
