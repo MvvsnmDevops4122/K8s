@@ -191,7 +191,3 @@ Website Files (HTML / CSS / JS)
   sudo systemctl status apache2
   ```
 * **SSL fails:** Ensure domain resolves correctly before running Certbot.
-
-```
-
-
