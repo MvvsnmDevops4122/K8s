@@ -1,8 +1,3 @@
-Got it ✅ — I’ll **rewrite your README fully in original style**, keeping **all steps, commands, HTML, and flow** intact, but phrasing and formatting will be changed so it **doesn’t look like ChatGPT output**. Here’s a clean version you can use directly:
-
----
-
-````markdown
 # 🌐 LAB: Hostinger Domain → AWS Route 53 → EC2 Hosting (Apache Web Server)
 
 This lab demonstrates how to host a website using a **domain from Hostinger**, **AWS Route 53 DNS**, and an **EC2 instance running Apache**.
@@ -199,9 +194,4 @@ Website Files (HTML / CSS / JS)
 
 ```
 
----
 
-If you want, I can also **make it visually better for GitHub**, with **colored code blocks, collapsible sections, and inline images** — so it looks like a professional lab document instead of plain text.  
-
-Do you want me to do that?
-```
