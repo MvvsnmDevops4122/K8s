@@ -1,25 +1,29 @@
-
-# 🌐 LAB: Hosting a Website Using Hostinger Domain, AWS Route 53 & EC2 (Apache Web Server)
-
-This lab demonstrates how to host a website using a **Hostinger domain**, **AWS Route 53 DNS**, and an **EC2 instance running Apache**.
+Got it ✅ — I’ll **rewrite your README fully in original style**, keeping **all steps, commands, HTML, and flow** intact, but phrasing and formatting will be changed so it **doesn’t look like ChatGPT output**. Here’s a clean version you can use directly:
 
 ---
 
-## 1️⃣ Purchase Domain & Prepare EC2
+````markdown
+# 🌐 LAB: Hostinger Domain → AWS Route 53 → EC2 Hosting (Apache Web Server)
 
-1. **Buy a domain** from Hostinger, for example: `kkdevopsb4.shop`.
+This lab demonstrates how to host a website using a **domain from Hostinger**, **AWS Route 53 DNS**, and an **EC2 instance running Apache**.
 
-2. **Launch an EC2 instance** on AWS:
-   - Select **Ubuntu 22.04 LTS** (free-tier eligible).  
-   - Allocate an **Elastic IP** so the IP remains fixed.
+---
 
-3. **Set up security group rules**:
-   - Port **80 (HTTP)**: open to all.  
-   - Port **443 (HTTPS)**: only if you plan to use SSL.  
-   - Port **22 (SSH)**: restricted to your IP.
+## 1️⃣ Domain Purchase & EC2 Setup
 
-4. **Connect via SSH**:
+1. **Buy a domain** via Hostinger  
+   Example: `kkdevopsb4.shop`
 
+2. **Launch an EC2 instance** on AWS:  
+   - OS: Ubuntu 22.04 LTS (free-tier eligible)  
+   - Allocate an **Elastic IP** for a static public IP  
+
+3. **Security Group Configuration**:  
+   - Open port **80 (HTTP)** for all  
+   - Open port **443 (HTTPS)** if you plan SSL  
+   - Restrict port **22 (SSH)** to your own IP  
+
+4. **SSH into your instance**:  
    ```bash
    ssh -i my-key.pem ubuntu@<Elastic-IP>
 ````
@@ -35,63 +39,65 @@ sudo systemctl enable apache2
 sudo systemctl start apache2
 ```
 
-✅ Test by opening `http://<Elastic-IP>` in a browser — Apache default page should appear.
+✅ Open `http://<Elastic-IP>` in a browser — Apache default page should appear.
 
 ---
 
-## 3️⃣ Configure Route 53 Hosted Zone
+## 3️⃣ Create Hosted Zone in Route 53
 
-1. Go to **AWS Console → Route 53 → Hosted Zones → Create Hosted Zone**.
-2. Enter your domain: `kkdevopsb4.shop`.
-3. Choose **Public Hosted Zone**.
-4. Copy the 4 **NS (Nameserver) values**.
+1. Navigate to **AWS Console → Route 53 → Hosted zones → Create Hosted Zone**
+2. Domain: `kkdevopsb4.shop`
+3. Type: **Public hosted zone**
+4. Copy the **4 NS (nameserver) records** provided
 
 ---
 
-## 4️⃣ Update Hostinger Nameservers
+## 4️⃣ Update Nameservers in Hostinger
 
-1. In Hostinger: **Domains → kkdevopsb4.shop → DNS / Nameservers**.
-2. Select **Custom nameservers** and paste the Route 53 NS records.
-3. Ensure **DNSSEC is turned off** to avoid propagation issues.
+1. In Hostinger: **Domains → kkdevopsb4.shop → DNS / Nameservers**
+2. Select **Use custom nameservers** and paste the 4 NS records from Route 53
+3. Make sure **DNSSEC is turned off** (otherwise DNS may fail to propagate)
 
 ---
 
 ## 5️⃣ Add A Records in Route 53
 
-* **Root domain (`kkdevopsb4.shop`)**:
+* **Root domain** (`kkdevopsb4.shop`)
 
   * Type: `A`
   * Value: `<Elastic-IP>`
 
-* **WWW subdomain (`www.kkdevopsb4.shop`)**:
+* **www subdomain** (`www.kkdevopsb4.shop`)
 
   * Type: `A`
   * Value: `<Elastic-IP>`
 
-*TTL can remain default (300).*
+TTL can remain **300**.
 
 ---
 
-## 6️⃣ Check DNS Resolution
+## 6️⃣ Verify DNS Setup
+
+Run these commands to confirm DNS is pointing correctly:
 
 ```bash
 nslookup kkdevopsb4.shop 8.8.8.8
 nslookup www.kkdevopsb4.shop 8.8.8.8
 ```
 
-✅ Both should return your Elastic IP.
+✅ Both should resolve to your **Elastic IP**.
 
 ---
 
 ## 7️⃣ Deploy Your Website
 
-1. Remove Apache’s default page:
+1. Remove Apache default page:
 
 ```bash
 sudo rm /var/www/html/index.html
 ```
 
-2. Create a custom HTML page:
+2. Create your website page:
 
 ```bash
 sudo vi /var/www/html/index.html
@@ -107,12 +113,12 @@ sudo vi /var/www/html/index.html
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CarePlus Hospital</title>
   <style>
-    body { margin:0; font-family: Arial, sans-serif; background:#0f172a; color:#e2e8f0; }
+    body { margin:0; font-family:Arial,sans-serif; background:#0f172a; color:#e2e8f0; }
     header { display:flex; justify-content:space-between; align-items:center; background:#1e293b; padding:15px 40px; }
     header h1 { color:#38bdf8; margin:0; }
-    nav a { color:#e2e8f0; text-decoration:none; margin:0 15px; }
+    nav a { margin:0 15px; color:#e2e8f0; text-decoration:none; }
     nav a:hover { color:#38bdf8; }
-    .hero { text-align:center; padding:80px 20px; background: linear-gradient(145deg,#0f172a,#1e293b); }
+    .hero { text-align:center; padding:80px 20px; background:linear-gradient(145deg,#0f172a,#1e293b); }
     .hero h2 { font-size:2.5rem; margin-bottom:20px; color:#fff; }
     footer { background:#1e293b; color:#cbd5e1; text-align:center; padding:20px; margin-top:30px; }
   </style>
@@ -139,23 +145,24 @@ sudo vi /var/www/html/index.html
 </html>
 ```
 
-Check your site:
+✅ Check in browser:
 
 * `http://kkdevopsb4.shop`
 * `http://www.kkdevopsb4.shop`
 
 ---
 
-## 8️⃣ Enable HTTPS (Optional)
+## 8️⃣ Enable HTTPS (Optional but Recommended)
 
 ```bash
-sudo snap install core; sudo snap refresh core
+sudo snap install core
+sudo snap refresh core
 sudo snap install --classic certbot
 sudo ln -s /snap/bin/certbot /usr/bin/certbot
 sudo certbot --apache -d kkdevopsb4.shop -d www.kkdevopsb4.shop
 ```
 
-✅ Free SSL via **Let’s Encrypt** with auto-renewal.
+✅ Let’s Encrypt will automatically install and renew the SSL certificate.
 
 ---
 
@@ -165,28 +172,36 @@ sudo certbot --apache -d kkdevopsb4.shop -d www.kkdevopsb4.shop
 User Browser
      │
      ▼
-Hostinger Domain (kkdevopsb4.shop)
+Domain: kkdevopsb4.shop (Hostinger)
      │
 (Custom Nameservers)
      ▼
-AWS Route 53
+AWS Route 53 (Hosted Zone)
      │
 (A Records → Elastic IP)
      ▼
-EC2 Instance (Apache)
+AWS EC2 Instance (Apache Web Server)
      │
-Website Content (HTML / App)
+Website Files (HTML / CSS / JS)
 ```
 
 ---
 
-## 10️⃣ Quick Troubleshooting
+## 10️⃣ Troubleshooting
 
-* **DNS issues**: Confirm Hostinger nameservers match Route 53, disable DNSSEC, allow propagation (\~30 mins).
-* **Apache not loading**: Check port 80 is open in the Security Group and Apache is running.
-* **SSL errors**: Ensure domain resolves correctly before running Certbot.
+* **DNS not resolving:** Confirm nameservers are correct in Hostinger and DNSSEC is off. Wait 5–30 min.
+* **Apache not showing site:** Make sure port 80 is open in Security Group and Apache is running:
+
+  ```bash
+  sudo systemctl status apache2
+  ```
+* **SSL fails:** Ensure domain resolves correctly before running Certbot.
 
 ```
 
 ---
 
+If you want, I can also **make it visually better for GitHub**, with **colored code blocks, collapsible sections, and inline images** — so it looks like a professional lab document instead of plain text.  
+
+Do you want me to do that?
+```
