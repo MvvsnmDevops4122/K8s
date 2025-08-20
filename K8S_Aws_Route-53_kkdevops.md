@@ -1,4 +1,3 @@
-
 # 🌐 LAB: Hostinger Domain → AWS Route 53 → EC2 (Apache Web Server)
 
 ## Part 1 – Buy Domain & Prepare EC2
@@ -18,86 +17,81 @@
 4. SSH into EC2  
    ```bash
    ssh -i my-key.pem ubuntu@<Elastic-IP>
-````
-
-
-## Part 2 – Install Apache Web Server
-
-```bash
+Part 2 – Install Apache Web Server
+bash
+Copy
+Edit
 sudo apt update
 sudo apt install apache2 -y
 sudo systemctl enable apache2
 sudo systemctl start apache2
-```
+✅ Test in browser → http://<Elastic-IP> → You should see Apache2 Default Page.
 
-✅ Test in browser → `http://<Elastic-IP>` → You should see Apache2 Default Page.
+Part 3 – Create Hosted Zone in Route 53
+Go to AWS → Route 53 → Hosted zones → Create hosted zone.
 
+Domain name: kkdevopsb4.shop.
 
+Type: Public hosted zone.
 
-## Part 3 – Create Hosted Zone in Route 53
+Create hosted zone.
 
-1. Go to AWS → Route 53 → Hosted zones → Create hosted zone.
-2. Domain name: `kkdevopsb4.shop`.
-3. Type: **Public hosted zone**.
-4. Create hosted zone.
-5. Copy the 4 NS (Name Server) values.
+Copy the 4 NS (Name Server) values.
 
----
+Part 4 – Update Nameservers in Hostinger
+Login → Hostinger → Domains → kkdevopsb4.shop → DNS / Nameservers
 
-## Part 4 – Update Nameservers in Hostinger
+Select Use custom nameservers → Paste 4 values from Route 53
 
-1. Login → Hostinger → Domains → `kkdevopsb4.shop` → DNS / Nameservers
-2. Select **Use custom nameservers** → Paste 4 values from Route 53
-3. Disable **DNSSEC** (important).
+Disable DNSSEC (important).
 
+Part 5 – Create A Records in Route 53
+Root domain
 
+Record name: (leave blank)
 
-## Part 5 – Create A Records in Route 53
+Type: A – IPv4 address
 
-* **Root domain**
+Value: <Elastic-IP>
 
-  * Record name: (leave blank)
-  * Type: A – IPv4 address
-  * Value: `<Elastic-IP>`
-  * TTL: 300
+TTL: 300
 
-* **www domain**
+www domain
 
-  * Record name: www
-  * Type: A – IPv4 address
-  * Value: `<Elastic-IP>`
-  * TTL: 300
+Record name: www
 
+Type: A – IPv4 address
 
+Value: <Elastic-IP>
 
-## Part 6 – Verify DNS
+TTL: 300
 
-```bash
+Part 6 – Verify DNS
+bash
+Copy
+Edit
 nslookup kkdevopsb4.shop 8.8.8.8
 nslookup www.kkdevopsb4.shop 8.8.8.8
-```
+✅ Both should return <Elastic-IP>.
 
-✅ Both should return `<Elastic-IP>`.
+Part 7 – Deploy Your Website
+Remove default Apache page:
 
----
+bash
+Copy
+Edit
+sudo rm /var/www/html/index.html
+Upload your site files:
 
-## Part 7 – Deploy Your Website
-
-1. Remove default Apache page:
-
-   ```bash
-   sudo rm /var/www/html/index.html
-   ```
-
-2. Upload your site files:
-
-   ```bash
-   sudo vi /var/www/html/index.html
-   ```
-
+bash
+Copy
+Edit
+sudo vi /var/www/html/index.html
 Example HTML page:
 
-```html
+html
+Copy
+Edit
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -135,26 +129,20 @@ Example HTML page:
   </footer>
 </body>
 </html>
-```
-
-
-
-## Part 8 – Enable HTTPS (Optional)
-
-```bash
+Part 8 – Enable HTTPS (Optional)
+bash
+Copy
+Edit
 sudo snap install core; sudo snap refresh core
 sudo snap install --classic certbot
 sudo ln -s /snap/bin/certbot /usr/bin/certbot
 sudo certbot --apache -d kkdevopsb4.shop -d www.kkdevopsb4.shop
-```
-
 ✅ SSL will auto-renew.
 
-
-
-## 🔄 Final Flow Diagram (Simplified)
-
-```
+🔄 Final Flow Diagram (Simplified)
+pgsql
+Copy
+Edit
 User Browser
      │
      ▼
@@ -169,13 +157,3 @@ AWS Route 53 (Public Hosted Zone)
 AWS EC2 Instance (Apache Web Server)
      │
 Website Content (HTML / App)
-```
-
-```
-
----
-
-👉 This will render properly on GitHub with syntax highlighting and sections.  
-
-Do you also want me to **append a Troubleshooting section** (DNS not resolving, SSL failure, Apache issues) at the bottom of this `README.md`?
-```
