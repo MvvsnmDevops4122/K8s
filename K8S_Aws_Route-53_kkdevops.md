@@ -1,97 +1,113 @@
+Perfect ✅ Let me give you the **clear and complete GitHub `README.md` file** — formatted, structured, and ready to copy-paste into your repo.
+
+---
+
+````markdown
 # 🌐 LAB: Hostinger Domain → AWS Route 53 → EC2 (Apache Web Server)
 
-## Part 1 – Buy Domain & Prepare EC2
+This guide walks through setting up a website using a **Hostinger domain**, **AWS Route 53**, and an **EC2 instance with Apache**.
 
-1. Buy Domain from Hostinger  
+---
+
+## 🚀 Part 1 – Buy Domain & Prepare EC2
+
+1. **Buy Domain from Hostinger**  
    Example: `kkdevopsb4.shop`
 
-2. Launch EC2 Instance (Ubuntu Preferred)  
-   - Choose Ubuntu 22.04 LTS (free-tier eligible).  
-   - Assign Elastic IP → ensures permanent IP (doesn’t change).  
+2. **Launch EC2 Instance (Ubuntu Preferred)**  
+   - Choose **Ubuntu 22.04 LTS** (free-tier eligible).  
+   - Assign an **Elastic IP** → permanent public IP.  
 
-3. Configure Security Group  
-   - Allow TCP 80 (HTTP) – from anywhere.  
-   - Allow TCP 443 (HTTPS) – if SSL planned.  
-   - Allow TCP 22 (SSH) – only from your IP.  
+3. **Configure Security Group**  
+   - Allow **TCP 80 (HTTP)** – from anywhere  
+   - Allow **TCP 443 (HTTPS)** – if SSL planned  
+   - Allow **TCP 22 (SSH)** – only from your IP  
 
-4. SSH into EC2  
+4. **SSH into EC2**  
    ```bash
    ssh -i my-key.pem ubuntu@<Elastic-IP>
-Part 2 – Install Apache Web Server
-bash
-Copy
-Edit
+````
+
+---
+
+## 🖥️ Part 2 – Install Apache Web Server
+
+```bash
 sudo apt update
 sudo apt install apache2 -y
 sudo systemctl enable apache2
 sudo systemctl start apache2
-✅ Test in browser → http://<Elastic-IP> → You should see Apache2 Default Page.
+```
 
-Part 3 – Create Hosted Zone in Route 53
-Go to AWS → Route 53 → Hosted zones → Create hosted zone.
+✅ Test: Open `http://<Elastic-IP>` in browser → Apache default page should appear.
 
-Domain name: kkdevopsb4.shop.
+---
 
-Type: Public hosted zone.
+## 🌍 Part 3 – Create Hosted Zone in Route 53
 
-Create hosted zone.
+1. Go to **AWS → Route 53 → Hosted zones → Create hosted zone**
+2. Enter domain: `kkdevopsb4.shop`
+3. Type: **Public hosted zone**
+4. Copy the **4 NS (Name Server) values**
 
-Copy the 4 NS (Name Server) values.
+---
 
-Part 4 – Update Nameservers in Hostinger
-Login → Hostinger → Domains → kkdevopsb4.shop → DNS / Nameservers
+## 🔗 Part 4 – Update Nameservers in Hostinger
 
-Select Use custom nameservers → Paste 4 values from Route 53
+1. Login → Hostinger → **Domains → kkdevopsb4.shop → DNS / Nameservers**
+2. Choose **Use custom nameservers** → paste the 4 values from Route 53
+3. Disable **DNSSEC** (important, else DNS won’t propagate)
 
-Disable DNSSEC (important).
+---
 
-Part 5 – Create A Records in Route 53
-Root domain
+## 📌 Part 5 – Create A Records in Route 53
 
-Record name: (leave blank)
+* **Root Domain Record**
 
-Type: A – IPv4 address
+  * Name: *(leave blank)*
+  * Type: `A – IPv4 address`
+  * Value: `<Elastic-IP>`
+  * TTL: 300
 
-Value: <Elastic-IP>
+* **www Subdomain Record**
 
-TTL: 300
+  * Name: `www`
+  * Type: `A – IPv4 address`
+  * Value: `<Elastic-IP>`
+  * TTL: 300
 
-www domain
+---
 
-Record name: www
+## 🔎 Part 6 – Verify DNS
 
-Type: A – IPv4 address
+Run:
 
-Value: <Elastic-IP>
-
-TTL: 300
-
-Part 6 – Verify DNS
-bash
-Copy
-Edit
+```bash
 nslookup kkdevopsb4.shop 8.8.8.8
 nslookup www.kkdevopsb4.shop 8.8.8.8
-✅ Both should return <Elastic-IP>.
+```
 
-Part 7 – Deploy Your Website
-Remove default Apache page:
+✅ Both should return `<Elastic-IP>`
 
-bash
-Copy
-Edit
-sudo rm /var/www/html/index.html
-Upload your site files:
+---
 
-bash
-Copy
-Edit
-sudo vi /var/www/html/index.html
-Example HTML page:
+## 🏥 Part 7 – Deploy Your Website
 
-html
-Copy
-Edit
+1. Remove default Apache page:
+
+   ```bash
+   sudo rm /var/www/html/index.html
+   ```
+
+2. Add your custom website:
+
+   ```bash
+   sudo vi /var/www/html/index.html
+   ```
+
+### Example HTML:
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -129,20 +145,31 @@ Edit
   </footer>
 </body>
 </html>
-Part 8 – Enable HTTPS (Optional)
-bash
-Copy
-Edit
+```
+
+✅ Now check:
+
+* `http://kkdevopsb4.shop`
+* `http://www.kkdevopsb4.shop`
+
+---
+
+## 🔒 Part 8 – Enable HTTPS (Optional but Recommended)
+
+```bash
 sudo snap install core; sudo snap refresh core
 sudo snap install --classic certbot
 sudo ln -s /snap/bin/certbot /usr/bin/certbot
 sudo certbot --apache -d kkdevopsb4.shop -d www.kkdevopsb4.shop
-✅ SSL will auto-renew.
+```
 
-🔄 Final Flow Diagram (Simplified)
-pgsql
-Copy
-Edit
+✅ Free SSL issued by **Let’s Encrypt** (auto-renews).
+
+---
+
+## 🔄 Final Flow Diagram
+
+```
 User Browser
      │
      ▼
@@ -157,3 +184,30 @@ AWS Route 53 (Public Hosted Zone)
 AWS EC2 Instance (Apache Web Server)
      │
 Website Content (HTML / App)
+```
+
+---
+
+## 🛠 Troubleshooting (Quick Fixes)
+
+* **DNS not resolving?**
+  → Check nameservers in Hostinger match Route 53. Disable DNSSEC. Wait up to 30 min.
+
+* **Apache page not loading?**
+  → Ensure Security Group allows port 80. Run `sudo systemctl status apache2`.
+
+* **SSL setup failed?**
+  → Check domain points correctly to EC2 before running `certbot`.
+
+---
+
+✅ Now you have a **ready-to-deploy website setup guide** with Hostinger + AWS.
+
+```
+
+---
+
+👉 This is the **clear final version** — just copy it into your repo as `README.md`.  
+
+Would you like me to also create a **diagram image (PNG)** of the flow (Browser → Domain → Route 53 → EC2 → Apache)? It would look nice in the GitHub README.
+```
