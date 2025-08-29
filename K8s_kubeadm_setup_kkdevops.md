@@ -466,11 +466,11 @@ kubeadm join 172.31.39.61:6443 --token fum1dp.ifem6w2f3f54fv2m&#x20;
 
 
 ###  🔹 Validate the Cluster (from Master) ###
-
+```bash
 kubectl get nodes   # should show master + workers as "Ready"
 
 kubectl get pods --all-namespaces
-
+```
 ## 🔹 Deploy a Sample App ##
 
 # Create test namespace
