@@ -139,6 +139,7 @@ sed -i '/ swap / s/^$.*$\$/#\1/g' /etc/fstab  # Comment out swap entries in /etc
 
 🔗 Ref:[https://kubernetes.io/docs/setup/production-environment/container-runtimes/](https://kubernetes.io/docs/setup/production-environment/container-runtimes/) (Taken from here)
 
+```bash
 cat <\<EOF | sudo tee /etc/modules-load.d/k8s.conf
 overlay
 br\_netfilter
@@ -146,6 +147,8 @@ EOF
 
 modprobe overlay
 modprobe br\_netfilter
+
+```
 
 # Step 5: Set system networking params
 
