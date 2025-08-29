@@ -217,75 +217,61 @@ systemctl daemon-reload
 systemctl start kubelet
 systemctl enable kubelet.service
 
-### Shell Scripting for Common Setup for All Nodes (Master & Workers) ###
+---
+### Final Script: k8s-common-setup.sh
 
-File name: k8s-common-setup.sh (chmod +x k8s-common-setup.sh)
-
-## Copy paste:
-
-\#!/bin/bash
+#!/bin/bash
 
 set -e
 
 # Step 2: Update system
-
 sudo apt update && sudo apt upgrade -y
 
 # Step 3: Disable Swap on All Nodes (Kubernetes does not allow swap)
-
 swapoff -a
-sed -i '/ swap / s/^$.*$\$/#\1/g' /etc/fstab
+sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
 
 # Step 4: Enable required kernel modules
-
-cat <\<EOF | sudo tee /etc/modules-load.d/k8s.conf
+cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
 overlay
-br\_netfilter
+br_netfilter
 EOF
 
 modprobe overlay
-modprobe br\_netfilter
+modprobe br_netfilter
 
 # Step 5: Set system networking params
-
-cat <\<EOF | sudo tee /etc/sysctl.d/k8s.conf
+cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
 net.bridge.bridge-nf-call-iptables  = 1
 net.bridge.bridge-nf-call-ip6tables = 1
-net.ipv4.ip\_forward                 = 1
+net.ipv4.ip_forward                 = 1
 EOF
 
 sysctl --system
 
-### Install Container Runtime (containerd)###
+### Install Container Runtime (containerd) ###
 
 # Step 6: Update packages and Install dependencies
-
 apt-get update -y && apt-get install -y ca-certificates curl gnupg lsb-release
 
 # Step 7: Add Docker GPG key
-
 mkdir -p /etc/apt/keyrings
-curl -fsSL [https://download.docker.com/linux/ubuntu/gpg](https://download.docker.com/linux/ubuntu/gpg) | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 
 # Step 8: Add Docker repository
-
-echo "deb \[arch=\$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] [https://download.docker.com/linux/ubuntu](https://download.docker.com/linux/ubuntu) \$(lsb\_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
 # Step 9: Install containerd
-
 apt-get update -y
 apt-get install -y containerd.io
 
 # Step 10: Configure containerd
-
 containerd config default > /etc/containerd/config.toml
 
 # Step 11: Update the configuration cgroup as systemd for containerd
-
-sed -i 's/SystemdCgroup \\= false/SystemdCgroup \\= true/g' /etc/containerd/config.toml
+sed -i 's/SystemdCgroup \= false/SystemdCgroup \= true/g' /etc/containerd/config.toml
 
 # Step 12: Restart and enable containerd
-
 systemctl restart containerd
 systemctl enable containerd
 systemctl status containerd
@@ -293,36 +279,30 @@ systemctl status containerd
 ### Install kubelet, kubeadm, kubectl ###
 
 # Step 13: Update packages and install dependencies
-
 apt-get update
 apt-get install -y apt-transport-https ca-certificates curl
 
 # Step 14: Add Kubernetes signing key
-
-curl -fsSL [https://pkgs.k8s.io/core:/stable:/v1.31/deb/Release.key](https://pkgs.k8s.io/core:/stable:/v1.31/deb/Release.key) | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.31/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
 
 # Step 15: Add Kubernetes repo
-
-echo 'deb \[signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] [https://pkgs.k8s.io/core:/stable:/v1.31/deb/](https://pkgs.k8s.io/core:/stable:/v1.31/deb/) /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.31/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
 
 # Step 16: Update package and install kubelet, kubeadm, kubectl
-
 apt-get update
 apt-get install -y kubelet kubeadm kubectl
 
 # Step 17: Prevent them from auto-updating
-
 apt-mark hold kubelet kubeadm kubectl
 
 # Step 18: Enable and start kubelet service
-
 systemctl daemon-reload
 systemctl start kubelet
 systemctl enable kubelet.service
 
 echo "✅ Common Kubernetes setup completed successfully on this node!"
 
-
+---
 ### 🔹 Master Node Setup ###
 
 ### [https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/)
