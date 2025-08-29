@@ -30,6 +30,8 @@
 
 * Many teams choose cloud providers, where node failures are handled automatically by the cloud platform.
 
+---
+
 # 2. Cloud Provider Clusters
  
 EKS (AWS Elastic Kubernetes Service)
@@ -48,13 +50,18 @@ GKE (Google Kubernetes Engine)
 
   manual intervention.
 
+---
+
 ## Summary:
 
 Application failure: If Pod down inside node is called application failure.
 
 Infra failure: If Entire node down is called Infra failure.
 
+---
+
 ### Lab Setup: Kubeadm on AWS EC2 (Ubuntu 22.04) ###
+
 
 ## Infrastructure Requirements:
 
@@ -105,6 +112,8 @@ Infra failure: If Entire node down is called Infra failure.
 * Same key pair and security group as master.
 
 * Click "Launch Instances".
+
+---
 
 ### 🔹 Common Setup for All Nodes (Master & Workers) ###
 
@@ -218,6 +227,7 @@ systemctl start kubelet
 systemctl enable kubelet.service
 
 ---
+
 ### Final Script: k8s-common-setup.sh
 
 ```bash
@@ -306,6 +316,7 @@ echo "✅ Common Kubernetes setup completed successfully on this node!"
 
 ```
 ---
+
 ### 🔹 Master Node Setup ###
 
 ### [https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/)
@@ -452,6 +463,7 @@ A node is a single server in the cluster (master or worker) that runs pods.
 ### Namespace Management
 
 ```bash
+
 kubectl create ns my-namespace                            # Create namespace
 
 kubectl get ns                                            # List namespaces
