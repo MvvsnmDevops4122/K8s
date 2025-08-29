@@ -220,8 +220,7 @@ systemctl enable kubelet.service
 ---
 ### Final Script: k8s-common-setup.sh
 
-bash
-
+```bash
 #!/bin/bash
 
 set -e
@@ -303,6 +302,9 @@ systemctl start kubelet
 systemctl enable kubelet.service
 
 echo "✅ Common Kubernetes setup completed successfully on this node!"
+
+
+```
 ---
 ### 🔹 Master Node Setup ###
 
@@ -359,6 +361,8 @@ kubeadm token create --print-join-command
 
 ### Kubernetes Master Node Setup Script ###
 
+```bash
+
 #!/bin/bash
 
 echo "🚀 Starting Kubernetes Master Node setup..."
@@ -404,6 +408,8 @@ echo "➡️ Use the join command stored in /root/join-worker.sh on worker nodes
 👉 Make executable: chmod +x master-setup.sh
 
 👉 Run as root: ./master-setup.sh
+
+```
 
 ### 🔹 Worker Node Setup ###
 
