@@ -451,6 +451,7 @@ A node is a single server in the cluster (master or worker) that runs pods.
 
 ### Namespace Management
 
+```bash
 kubectl create ns my-namespace                            # Create namespace
 
 kubectl get ns                                            # List namespaces
@@ -474,6 +475,8 @@ kubectl delete pod nginx-pod                              # default namespace
 kubectl api-resources                                     # List all resource types
 
 kubectl config set-context --current --namespace=test     # Switch namespace
+
+```
 
 # ✅ Resource Quotas
 
