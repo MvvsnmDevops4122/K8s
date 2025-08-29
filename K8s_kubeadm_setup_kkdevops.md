@@ -130,9 +130,8 @@ sudo apt update && sudo apt upgrade -y
 🔗 Ref:[https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/) (Taken from here)
 
 ```bash
-swapoff -a       # Disable swap immediately
-
-sed -i '/ swap / s/^$.*$\$/#\1/g' /etc/fstab  # Comment out swap entries in /etc/fstab so it doesn't re-enable on reboot
+swapoff -a      
+sed -i '/ swap / s/^$.*$\$/#\1/g' /etc/fstab  
 ```
 
 # Step 4: Enable required kernel modules
@@ -140,25 +139,26 @@ sed -i '/ swap / s/^$.*$\$/#\1/g' /etc/fstab  # Comment out swap entries in /etc
 🔗 Ref:[https://kubernetes.io/docs/setup/production-environment/container-runtimes/](https://kubernetes.io/docs/setup/production-environment/container-runtimes/) (Taken from here)
 
 ```bash
-cat <\<EOF | sudo tee /etc/modules-load.d/k8s.conf
+cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
 overlay
-br\_netfilter
+br_netfilter
 EOF
 
 modprobe overlay
-modprobe br\_netfilter
-
+modprobe br_netfilter
 ```
 
 # Step 5: Set system networking params
 
-cat <\<EOF | sudo tee /etc/sysctl.d/k8s.conf
+```bash
+cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
 net.bridge.bridge-nf-call-iptables  = 1
 net.bridge.bridge-nf-call-ip6tables = 1
-net.ipv4.ip\_forward                 = 1
+net.ipv4.ip_forward                 = 1
 EOF
 
 sysctl --system
+```
 
 ### Install Container Runtime (containerd) ###
 
@@ -170,68 +170,93 @@ sysctl --system
 
 🔗 Ref:[https://docs.docker.com/engine/install/ubuntu/](https://docs.docker.com/engine/install/ubuntu/)
 
+```bash
 apt-get update -y && apt-get install -y ca-certificates curl gnupg lsb-release
+```
 
 # Step 7: Add Docker GPG key
 
+```bash
 mkdir -p /etc/apt/keyrings
 curl -fsSL [https://download.docker.com/linux/ubuntu/gpg](https://download.docker.com/linux/ubuntu/gpg) | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-
+```
 # Step 8: Add Docker repository
 
+```bash
 echo "deb \[arch=\$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] [https://download.docker.com/linux/ubuntu](https://download.docker.com/linux/ubuntu) \$(lsb\_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
+```
 # Step 9: Install containerd
 
+```bash
 apt-get update -y
 apt-get install -y containerd.io
+```
 
 # Step 10: Configure containerd
 
+```bash
 containerd config default > /etc/containerd/config.toml
+```
 
 # Step 11: Try to update the configuration cgroup as systemd for containerd
 
+```bash
 sed -i 's/SystemdCgroup = false/SystemdCgroup = true/g' /etc/containerd/config.toml
 
+```
 # Step 12: Restart and enable containerd
+
+```bash
 
 systemctl restart containerd
 systemctl enable containerd
 systemctl status containerd
 
+```
 ### Install kubelet, kubeadm, kubectl ###
 
 # Step 13: Update packages and install dependencies
 
+```bash
+
 apt-get update
 apt-get install -y apt-transport-https ca-certificates curl
-
+```
 # Step 14: Add Kubernetes signing key
 
+```bash
 curl -fsSL [https://pkgs.k8s.io/core:/stable:/v1.31/deb/Release.key](https://pkgs.k8s.io/core:/stable:/v1.31/deb/Release.key) | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
-
+```
 # Step 15: Add Kubernetes repo
 
+```bash
 echo 'deb \[signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] [https://pkgs.k8s.io/core:/stable:/v1.31/deb/](https://pkgs.k8s.io/core:/stable:/v1.31/deb/) /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
 
+```
 # Step 16: Update package and install kubelet, kubeadm, kubectl
 
 🔗 Ref:[https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#check-required-ports](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#check-required-ports)
 
+```bash
 sudo apt-get update
 sudo apt-get install -y kubelet kubeadm kubectl
 
+```
 # Step 17: Prevent them from auto-updating
+
+```bash
 
 sudo apt-mark hold kubelet kubeadm kubectl
 
+```
 # Step 18: Enable and start kubelet service
 
+```bash
 systemctl daemon-reload
 systemctl start kubelet
 systemctl enable kubelet.service
-
+```
 ---
 
 ### Final Script: k8s-common-setup.sh
@@ -330,52 +355,57 @@ echo "✅ Common Kubernetes setup completed successfully on this node!"
 # Step 1: Initialize Kubernetes Master
 
 ---
-
+```bash
 kubeadm init
 
 IF Error
 \#sudo kubeadm init --cri-socket /run/containerd/containerd.sock
+```
 
 # Step 2: Configure kubeconfig for kubectl
 
 ---
-
+```bash
 mkdir -p \$HOME/.kube
 cp -i /etc/kubernetes/admin.conf \$HOME/.kube/config
 chown \$(id -u):\$(id -g) \$HOME/.kube/config
+```
 
 # Step 3: Verify cluster status
 
 ---
-
+```bash
 kubectl get nodes
 kubectl get pods -n kube-system
+```
 
 # Step 4: Install CNI plugin (Choose one: weave or calico)
 
 ---
 
 # Weave Net (Recommended - simple)
-
+```bash
 kubectl apply -f [https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml](https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml)
-
+```
 # OR Calico
 
+```bash
 kubectl apply -f [https://docs.projectcalico.org/manifests/calico.yaml](https://docs.projectcalico.org/manifests/calico.yaml)
-
+```
 # Step 5: Verify network and pods
 
 ---
+```bash
 
 kubectl get nodes
 kubectl get pods --all-namespaces
-
+```
 # Step 6: Generate join command for worker nodes
 
 ---
-
+```bash
 kubeadm token create --print-join-command
-
+```
 ### Kubernetes Master Node Setup Script ###
 
 ```bash
@@ -445,17 +475,17 @@ kubectl get pods --all-namespaces
 ## 🔹 Deploy a Sample App ##
 
 # Create test namespace
-
+```bash
 kubectl create ns test
-
+```
 # Deploy nginx pod in "test" namespace
-
+```bash
 kubectl run nginx-demo --image=nginx --port=80 -n test
-
+```
 # Verify
-
+```bash
 kubectl get pods -n test
-
+```
 # 📘 Kubernetes Essentials
 
 ###  What is a Cluster?
