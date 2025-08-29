@@ -129,8 +129,11 @@ sudo apt update && sudo apt upgrade -y
 
 🔗 Ref:[https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/) (Taken from here)
 
-swapoff -a
-sed -i '/ swap / s/^$.*$\$/#\1/g' /etc/fstab
+```bash
+swapoff -a       # Disable swap immediately
+
+sed -i '/ swap / s/^$.*$\$/#\1/g' /etc/fstab  # Comment out swap entries in /etc/fstab so it doesn't re-enable on reboot
+```
 
 # Step 4: Enable required kernel modules
 
