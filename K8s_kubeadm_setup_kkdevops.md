@@ -178,7 +178,7 @@ apt-get update -y && apt-get install -y ca-certificates curl gnupg lsb-release
 
 ```bash
 mkdir -p /etc/apt/keyrings
-curl -fsSL [https://download.docker.com/linux/ubuntu/gpg](https://download.docker.com/linux/ubuntu/gpg) | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 ```
 # Step 8: Add Docker repository
 
