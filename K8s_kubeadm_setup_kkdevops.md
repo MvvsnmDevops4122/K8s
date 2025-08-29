@@ -220,6 +220,8 @@ systemctl enable kubelet.service
 ---
 ### Final Script: k8s-common-setup.sh
 
+bash
+
 #!/bin/bash
 
 set -e
@@ -301,7 +303,6 @@ systemctl start kubelet
 systemctl enable kubelet.service
 
 echo "✅ Common Kubernetes setup completed successfully on this node!"
-
 ---
 ### 🔹 Master Node Setup ###
 
