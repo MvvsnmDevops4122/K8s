@@ -385,12 +385,12 @@ kubectl get pods -n kube-system
 
 # Weave Net (Recommended - simple)
 ```bash
-kubectl apply -f [https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml](https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml)
+kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml
 ```
 # OR Calico
 
 ```bash
-kubectl apply -f [https://docs.projectcalico.org/manifests/calico.yaml](https://docs.projectcalico.org/manifests/calico.yaml)
+kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
 ```
 # Step 5: Verify network and pods
 
@@ -434,8 +434,7 @@ kubectl get pods -n kube-system
 
 # Step 4: Install CNI plugin (Weave Net)
 
-echo "🔹 Installing Weave Net CNI..."
-kubectl apply -f "[https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml](https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml)"
+kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml
 
 # Step 5: Verify nodes and podsecho "🔹 Checking nodes and pods..."
 
