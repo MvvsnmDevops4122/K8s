@@ -50,16 +50,6 @@ GKE (Google Kubernetes Engine)
 
 ## Summary:
 
-+-------------------+-----------------------+-----------------------+----------------------+----------------------+
-| Cluster Type      | Example Tools         | Cluster Size          | Pod Failure Handling | Node Failure Handling|
-+-------------------+-----------------------+-----------------------+----------------------+----------------------+
-| Self-managed      | Minikube, Kubeadm     | Single/Multi-node     | Kubernetes auto      | Manual (by you)      |
-+-------------------+-----------------------+-----------------------+----------------------+----------------------+
-| Cloud-managed     | EKS, AKS, GKE         | Multi-node (flexible) | Kubernetes auto      | Cloud provider       |
-+-------------------+-----------------------+-----------------------+----------------------+----------------------+
-
-## Summary:
-
 Application failure: If Pod down inside node is called application failure.
 
 Infra failure: If Entire node down is called Infra failure.
@@ -128,14 +118,14 @@ sudo apt update && sudo apt upgrade -y
 
 # Step 3: Disable Swap on All Nodes(Kubernetes does not allow swap)
 
-#[https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/) (Taken from here)
+🔗 Ref:[https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/) (Taken from here)
 
 swapoff -a
 sed -i '/ swap / s/^$.*$\$/#\1/g' /etc/fstab
 
 # Step 4: Enable required kernel modules
 
-#[https://kubernetes.io/docs/setup/production-environment/container-runtimes/](https://kubernetes.io/docs/setup/production-environment/container-runtimes/) (Taken from here)
+🔗 Ref:[https://kubernetes.io/docs/setup/production-environment/container-runtimes/](https://kubernetes.io/docs/setup/production-environment/container-runtimes/) (Taken from here)
 
 cat <\<EOF | sudo tee /etc/modules-load.d/k8s.conf
 overlay
@@ -159,11 +149,11 @@ sysctl --system
 
 # Step 6: Update packages and Install dependencies
 
-#[https://kubernetes.io/docs/setup/production-environment/container-runtimes/#containerd](https://kubernetes.io/docs/setup/production-environment/container-runtimes/#containerd)
+🔗 Ref:[https://kubernetes.io/docs/setup/production-environment/container-runtimes/#containerd](https://kubernetes.io/docs/setup/production-environment/container-runtimes/#containerd)
 
-#[https://github.com/containerd/containerd/blob/main/docs/getting-started.md](https://github.com/containerd/containerd/blob/main/docs/getting-started.md)
+🔗 Ref:[https://github.com/containerd/containerd/blob/main/docs/getting-started.md](https://github.com/containerd/containerd/blob/main/docs/getting-started.md)
 
-#[https://docs.docker.com/engine/install/ubuntu/](https://docs.docker.com/engine/install/ubuntu/)
+🔗 Ref:[https://docs.docker.com/engine/install/ubuntu/](https://docs.docker.com/engine/install/ubuntu/)
 
 apt-get update -y && apt-get install -y ca-certificates curl gnupg lsb-release
 
@@ -212,7 +202,7 @@ echo 'deb \[signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] [https://pkg
 
 # Step 16: Update package and install kubelet, kubeadm, kubectl
 
-### [https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#check-required-ports](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#check-required-ports)
+🔗 Ref:[https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#check-required-ports](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#check-required-ports)
 
 sudo apt-get update
 sudo apt-get install -y kubelet kubeadm kubectl
@@ -234,13 +224,8 @@ File name: k8s-common-setup.sh (chmod +x k8s-common-setup.sh)
 ## Copy paste:
 
 \#!/bin/bash
+
 set -e
-
-\#############################################
-
-# Common Setup for All Nodes (Master & Workers)
-
-\#############################################
 
 # Step 2: Update system
 
@@ -271,11 +256,7 @@ EOF
 
 sysctl --system
 
-\#############################################
-
-# Install Container Runtime (containerd)
-
-\#############################################
+### Install Container Runtime (containerd)###
 
 # Step 6: Update packages and Install dependencies
 
@@ -309,11 +290,7 @@ systemctl restart containerd
 systemctl enable containerd
 systemctl status containerd
 
-\#############################################
-
-# Install kubelet, kubeadm, kubectl
-
-\#############################################
+### Install kubelet, kubeadm, kubectl ###
 
 # Step 13: Update packages and install dependencies
 
@@ -402,12 +379,6 @@ kubeadm token create --print-join-command
 ### Kubernetes Master Node Setup Script ###
 
 #!/bin/bash
-
-# =============================================================
-
-# Kubernetes Master Node Setup Script (Run as root user)
-
-# =============================================================
 
 echo "🚀 Starting Kubernetes Master Node setup..."
 
