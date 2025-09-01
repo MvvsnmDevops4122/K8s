@@ -128,4 +128,3 @@ kubectl get pods
 * Not suited for regular apps.
 
 ```
----
