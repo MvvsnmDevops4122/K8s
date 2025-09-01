@@ -129,6 +129,3 @@ kubectl get pods
 
 ```
 ---
-
-Do you also want me to make this look like a **beautiful GitHub README.md style doc** (with emojis, tables, and highlights)?
-```
