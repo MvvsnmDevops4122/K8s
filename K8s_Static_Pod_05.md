@@ -11,7 +11,7 @@
 
 ## 2. Key Characteristics of Static Pods
 
-### 1. Node-Bound
+### 1. Node-Specific
 * Static Pods are tied to a specific node and cannot be scheduled or moved to other nodes
 
 ### 2. Managed by Kubelet
