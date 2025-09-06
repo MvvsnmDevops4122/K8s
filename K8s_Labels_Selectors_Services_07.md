@@ -530,7 +530,7 @@ curl: (7) Failed to connect to 10.106.137.193 port 8080: No route to host
 
 * Exposes the Service on a static port (range: 30000–32767) on each node’s IP.
 * Extension of ClusterIP.
-* Accessible from outside the cluster using: <NodeIP>:<NodePort>.
+* Accessible from outside the cluster using:<NodeIP>:<NodePort>.
 * Each Node forwards traffic to the Service → Pods.
 
 ### Use Cases
