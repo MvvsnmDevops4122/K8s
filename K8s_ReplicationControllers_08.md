@@ -61,20 +61,21 @@
 apiVersion: v1
 kind: ReplicationController
 metadata:
-  name: javawebapprc
+  name: javawebapprc        # controller name
   namespace: test-ns
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     app: javawebapp
-  template:
+  template:                # contain pod information
     metadata:
-      labels:
-        app: javawebapp
+      name: javawebapppod   # pod name
+      labels:               
+        app: javawebapp     # match the labels as selectors
     spec:
       containers:
       - name: javawebappcon
-        image: kkducationb2/java-webapp:1.1
+        image: satyamolleti4599/maven-web-app:1.0.0
         ports:
         - containerPort: 8080
 ````
@@ -180,7 +181,7 @@ spec:
     spec: 
       containers:
       - name: javawebapprccon
-        image: kkeducationb2/java-webapp:1.1
+        image: satyamolleti4599/maven-web-app:1.0.0
         ports:
         - containerPort: 8080
 ```
