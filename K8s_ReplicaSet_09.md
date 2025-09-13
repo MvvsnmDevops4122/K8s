@@ -171,35 +171,39 @@ selector:
 ```yaml
 apiVersion: apps/v1
 kind: ReplicaSet
-metadata:
-  name: javars
+metadata: 
+  name: javawebapprs
+  namespace: test-ns
 spec:
   replicas: 3
   selector:
     matchLabels:
       app: javawebapp
   template:
-    metadata:
+    metadata: 
+      name: javawebapprcpod
       labels:
         app: javawebapp
-    spec:
+    spec: 
       containers:
-      - name: javawebapp
-        image: stacksimplify/spring-boot-mongo:1.0.0
+      - name: javawebapprccon
+        image: satyamolleti4599/maven-web-app:1.0.0
         ports:
         - containerPort: 8080
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: javars-service
+  name: javawebapprs-service
+  namespace: test-ns
 spec:
+  type: NodePort
   selector:
     app: javawebapp
   ports:
-    - protocol: TCP
-      port: 80
+    - port: 80
       targetPort: 8080
+      nodePort: 30007
 ```
 
 ### Understanding spec in ReplicaSet
