@@ -359,14 +359,7 @@ spec:
 
 ### Why RollingUpdate is Preferred?
 
-* ✅ **No downtime** – At least one Pod always running.
-* ✅ **Safer upgrades** – Stops rollout if new Pods fail.
-* ✅ **Easy rollback** – Switch back to older ReplicaSet.
-* ✅ **Production standard** – Default strategy for high availability clusters.
-
-```
-
----
-
-Do you want me to **split this into multiple smaller `.md` files** (like `01-deployment.md`, `02-strategies.md`, `03-rollout.md`) for better readability, or keep it as one long file?
-```
+**No downtime** – At least one Pod always running.
+**Safer upgrades** – Stops rollout if new Pods fail.
+**Easy rollback** – Switch back to older ReplicaSet.
+**Production standard** – Default strategy for high availability clusters.
