@@ -84,10 +84,10 @@ Step:3 Start new Pods → \[v2]\[v2]\[v2]
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: javawebapp
+  name: javawebapp-deployment
   namespace: test-ns
 spec:
-  replicas: 2
+  replicas: 3
   strategy:
     type: Recreate
   selector:
@@ -99,23 +99,26 @@ spec:
         app: javawebapp
     spec:
       containers:
-      - name: javawebapp
-        image: k8seducation12345/spring-app:1.0.0
+      - name: javawebapp-container
+        image: satyamolleti4599/maven-web-app:1.0.0
         ports:
         - containerPort: 8080
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: javawebappsvc
+  name: javawebapp-service
   namespace: test-ns
 spec:
-  type: NodePort
   selector:
     app: javawebapp
   ports:
-    - port: 80
-      targetPort: 8080
+    - protocol: TCP
+      port: 8080        # Service port
+      targetPort: 8080  # Container port
+      nodePort: 30008   # Must be between 30000–32767 if type=NodePort
+  type: NodePort
+
 ````
 
 ---
@@ -173,7 +176,7 @@ deployment "javawebappdep" successfully rolled out
 * Update image in YAML:
 
   ```yaml
-  image: kkeducation12345/spring-app:1.0.1
+  image: satyamolleti4599/maven-web-app:1.0.1
   ```
 
 ```bash
@@ -204,7 +207,7 @@ kubectl rollout history deployment javawebappdep -n test-ns --revision=2
 Change YAML:
 
 ```yaml
-image: kkeducation12345/spring-app:1.0.2
+image: satyamolleti4599/maven-web-app:1.0.2
 ```
 
 Apply update:
@@ -216,12 +219,12 @@ kubectl get all -n test-ns
 
 ---
 
-### Step 5: Update to Version 1.0.3
+### Step 5: Update to Version 2.0.0
 
 Change YAML:
 
 ```yaml
-image: kkeducation12345/spring-app:1.0.3
+image: satyamolleti4599/maven-web-app:2.0.0
 ```
 
 Apply and check rollout:
@@ -306,28 +309,41 @@ Step 4: [v2][v2][v2]
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: javawebappdep
+  name: javawebapp-deployment
   namespace: test-ns
 spec:
   replicas: 3
+  strategy:
+    type: RollingUpdate
   selector:
     matchLabels:
       app: javawebapp
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 1
   template:
     metadata:
       labels:
         app: javawebapp
     spec:
       containers:
-      - name: javawebapp
-        image: kkeducation12345/spring-app:1.0.1
+      - name: javawebapp-container
+        image: satyamolleti4599/maven-web-app:1.0.0
         ports:
         - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: javawebapp-service
+  namespace: test-ns
+spec:
+  selector:
+    app: javawebapp
+  ports:
+    - protocol: TCP
+      port: 8080        # Service port
+      targetPort: 8080  # Container port
+      nodePort: 30008   # Must be between 30000–32767 if type=NodePort
+  type: NodePort
+
 ```
 
 ---
