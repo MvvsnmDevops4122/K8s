@@ -45,7 +45,7 @@ You should see the **Apache2 Default Page**.
 ## Part 3 – Create Hosted Zone in Route 53
 
 1. Go to AWS → Route 53 → Hosted zones → Create hosted zone
-2. Domain name: `kkdevopsb4.shop`
+2. Domain name: `mvvsnm.shop`
 3. Type: Public hosted zone
 4. Create hosted zone
 5. Copy the **4 NS (Name Server) values** (e.g., `ns-422.awsdns-52.com`, etc.)
@@ -54,7 +54,7 @@ You should see the **Apache2 Default Page**.
 
 ## Part 4 – Update Nameservers in Hostinger
 
-1. Login → Hostinger → Domains → `kkdevopsb4.shop` → DNS / Nameservers
+1. Login → Hostinger → Domains → `mvvsnm.shop` → DNS / Nameservers
 2. Select **Use custom nameservers** → Paste the 4 values from Route 53
 3. Disable **DNSSEC** (important, otherwise records won’t propagate)
 
@@ -81,8 +81,8 @@ You should see the **Apache2 Default Page**.
 ## Part 6 – Verify DNS
 
 ```bash
-nslookup kkdevopsb4.shop 8.8.8.8
-nslookup www.kkdevopsb4.shop 8.8.8.8
+nslookup mvvsnm.shop 8.8.8.8
+nslookup www.mvvsnm.shop 8.8.8.8
 ```
 
 ✅ Both should return `<Elastic-IP>`.
