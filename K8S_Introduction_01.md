@@ -1,18 +1,18 @@
-# 🚀 Kubernetes — Introduction & Features
+#  Kubernetes — Introduction & Features
 
 * Kubernetes (K8s) is an open-source container orchestration platform/Engine/tool.
 * It automates the deployment, scaling, and management of containerized applications.
 
 ---
 
-## 🧭 Container Orchestration Engine
+##  Container Orchestration Engine
 
 * Container orchestration means managing containers automatically — like when to start, stop, scale, and 
   handle traffic between them.
 
 * Kubernetes manages clusters of containers, ensuring the application runs consistently across different environments.
 
-### ⚙️ Key Responsibilities
+###  Key Responsibilities
 
 * Container deployment : Runs containers automatically across available servers.
 
@@ -34,7 +34,7 @@
 
 ---
 
-## 📜 History
+##  History
 
 - Developed by Google  
 - Written in Go/Golang  
@@ -44,7 +44,7 @@
 
 ---
 
-# ✨ Kubernetes Key Features
+#  Kubernetes Key Features
 
 ## Auto‑Scheduling
 
@@ -97,7 +97,7 @@
 
 A group of nodes (Control Plane + Workers) together form a Kubernetes Cluster.
 
-## 🛠️ 1. Control Plane (Master)
+##  1. Control Plane (Master)
 
 * This is the brain of the cluster, handling decisions and maintaining the overall cluster state.
 
