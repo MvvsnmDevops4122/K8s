@@ -60,8 +60,9 @@
 
 ## Automated Rollouts and Rollbacks
 
-* It supports rollouts and rollbacks for the desired state of the containerized application.
-
+* Allows changes in app configuration or container image to be rolled out gradually
+  
+* Supports rollback in case of failure
 
 ## Horizontal Scaling 
 
@@ -77,24 +78,14 @@
 
 * Distributes the incoming traffic equally to all containers, so no single one is overloaded.
 
-
-## Support for multiple clouds and hybrid clouds
-
-* Kubernetes can be deployed on different cloud platforms and run containerized applications across multiple clouds.
-
 ## Storage Orchestration
 
 * Kubernetes supports mounting local storage or cloud provider storage (e.g., AWS EBS, GCP Persistent Disks)
 
 * Supports NFS, iSCSI, etc.
-
-## Community Support
-
-* Kubernetes has a large and active community with frequent updates, bug fixes, and new features being added.
-
 ---
 
-# 🏗️ Kubernetes Architecture Overview
+#  Kubernetes Architecture Overview
 
 <img width="1402" height="882" alt="image" src="https://github.com/user-attachments/assets/4b67947d-7fa8-48f0-83a3-1b891e0bcbb1" />
 
