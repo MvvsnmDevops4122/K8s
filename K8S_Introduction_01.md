@@ -96,6 +96,8 @@
 
 # 🏗️ Kubernetes Architecture Overview
 
+<img width="1402" height="882" alt="image" src="https://github.com/user-attachments/assets/4b67947d-7fa8-48f0-83a3-1b891e0bcbb1" />
+
 * Kubernetes has two main components:
 
   1. Control Plane (Master)
