@@ -40,7 +40,7 @@
 - Written in Go/Golang  
 - Donated to CNCF (Cloud Native Computing Foundation) in 2014  
 - Kubernetes v1.0 was released on July 21, 2015  
-- Current stable release: **v1.32**
+- Current stable release: **v1.34**
 
 ---
 
