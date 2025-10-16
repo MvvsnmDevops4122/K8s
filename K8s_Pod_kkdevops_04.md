@@ -207,17 +207,6 @@ Common Volume Types:
 
 ----
 
-## 8. Deploying Pods
-
-* You can create a pod directly, but in real‑world projects, you usually use controllers:
-
-* Deployment – Use this for apps that can run many copies without problem (stateless).
-
-* StatefulSet – Use this when each pod needs a unique identity and stable storage (databases).
-
-* DaemonSet – Use this to run one pod on every node in the cluster.
-
-----
 
 ## Kubernetes Pod Commands (Copy-Paste)
 
