@@ -14,7 +14,9 @@
   - Secrets
 - It acts like a **virtual cluster inside the main cluster**.  
 - Namespaces divide a cluster into **multiple virtual workspaces**.  
-- This makes it easier to manage resources for different teams, projects, or environments (e.g., Dev, Test, Prod).  
+- This makes it easier to manage resources for different teams, projects, or environments (e.g., Dev, Test, Prod).
+  
+<img width="995" height="504" alt="image" src="https://github.com/user-attachments/assets/7cf07ae3-0fed-46ae-98bf-4af5660138c9" />
 
 ---
 
