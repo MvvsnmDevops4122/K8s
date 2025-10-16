@@ -68,7 +68,11 @@
 
 * Kubernetes can automatically scale your application up or down based on metrics like CPU usage, memory, or custom thresholds.
 
+<img width="978" height="529" alt="image" src="https://github.com/user-attachments/assets/7c52acfc-d83d-4936-b325-8fbd1dde7ca9" />
+
 ## Service Discovery & Load Balancing:
+
+<img width="927" height="532" alt="image" src="https://github.com/user-attachments/assets/1497ee0e-667e-4648-aaf7-a84345bc125d" />
 
 * In Kubernetes, you don’t have to manually assign IPs to communication between Pods/containers.
 
