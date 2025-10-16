@@ -16,17 +16,14 @@
 
 ### 2. Managed by Kubelet
 * The kubelet watches a directory (commonly `/etc/kubernetes/manifests/`) and creates pods from the manifest files found there.
-
-### 3. Bypasses API Server
-* They are not created through the Kubernetes API server. Instead, they come directly from the node’s filesystem.
-
-### 4. Visible but Not Controllable
+  
+### 3. Visible but Not Controllable
 * Static Pods appear when you run `kubectl get pods`, but you cannot update, scale, or delete them from the master.
 
-### 5. Self-Healing
+### 4. Self-Healing
 * If a Static Pod crashes, kubelet will restart it automatically.
 
-### 6. No Controllers
+### 5. No Controllers
 * They are not managed by higher-level controllers like Deployments, ReplicaSets, or StatefulSets.
 
 ---
