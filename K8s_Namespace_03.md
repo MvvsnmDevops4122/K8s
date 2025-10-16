@@ -159,6 +159,11 @@ Check quota again:
 kubectl describe ns my-namespace
 ```
 
+Edit the quota:
+
+```bash
+kubectl edit quota my-resource-quota -n my-namespace
+```
 **Example output:**
 
 ```
