@@ -36,6 +36,8 @@ ReplicaSet continuously compares these states:
 - If the observed count is greater than the desired count, it deletes the extra Pods.
 - If the observed count equals the desired count, it does nothing.
 
+<img width="968" height="694" alt="image" src="https://github.com/user-attachments/assets/07e836b2-43af-456b-94f6-a9f26759f26e" />
+
 ---
 
 ## 3. How ReplicaSet Uses Label Selectors
@@ -56,6 +58,8 @@ selector:
 
 * This ReplicaSet will only control Pods with the label `app=myapp`.
 * If a Pod doesn’t have this label, RS ignores it.
+
+<img width="904" height="382" alt="image" src="https://github.com/user-attachments/assets/7fced8f8-e8be-42f0-bf03-41d51403c19d" />
 
 #### 2. MatchExpressions (Set-based, Advanced)
 
