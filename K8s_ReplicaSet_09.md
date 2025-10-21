@@ -83,24 +83,50 @@ For complex conditions, we use `matchExpressions`. It lets you define rules like
 **Example:**
 
 ```yaml
-selector:
-  matchLabels:
-    env: prod
-  matchExpressions:
-  - key: tier
-    operator: In
-    values:
-      - frontend
-      - backend
-```
+EX2 set based
+==============
 
-**Explanation:**
 
-* Pod must have `env=prod`.
-* Pod must also have `tier`, and its value must be `frontend` or `backend`.
-* Only Pods matching both conditions will be managed by ReplicaSet.
-
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: javawebapprs
+  namespace: test-ns
+spec:
+  replicas: 3
+  selector:
+    matchExpressions:
+      - key: app
+        operator: In
+        values:
+          - javawebapp1
+          - javawebapp2
+          - javawebapp
+  template:
+    metadata:
+      labels:
+        app: javawebapp1  # or javawebapp2 or javawebapp, make sure this matches your selector
+    spec:
+      containers:
+        - name: javawebapp
+          image: kkeducationb2/java-webapp:1.1
+          ports:
+            - containerPort: 8080
 ---
+apiVersion: v1
+kind: Service
+metadata:
+  name: javawebappsvc
+  namespace: test-ns
+spec:
+  type: NodePort
+  selector:
+    app: javawebapp1  # or javawebapp2 or javawebapp, make sure this matches your ReplicaSet's pods
+  ports:
+    - port: 80
+      targetPort: 8080
+      nodePort: 30080
+```
 
 ## 4. Operators in matchExpressions
 
