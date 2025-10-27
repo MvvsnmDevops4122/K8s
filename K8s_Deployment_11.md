@@ -41,6 +41,8 @@ After that, Kubernetes handles:
 * **Rollback Capability** – Easily revert to a previous version if a rollout fails.  
 * **Declarative Scaling** – Adjust the number of replicas by changing a single field in the YAML file.  
 
+<img width="940" height="413" alt="image" src="https://github.com/user-attachments/assets/549ba0c4-37ff-4aa7-9854-2324a7beab5a" />
+
 ---
 
 ## 3. Deployment Strategies in Kubernetes
@@ -58,6 +60,9 @@ The two main strategies are:
 
 * In this strategy, all the old Pods are terminated first, and then new Pods are created with the updated version.
 * This means there will be downtime during the update because, for a short period, no Pods are available to serve requests.
+
+<img width="861" height="485" alt="image" src="https://github.com/user-attachments/assets/0ed261be-7ceb-4dfe-b4a7-dee8dc0cf439" />
+
 
 ### When to use Recreate?
 
@@ -199,6 +204,7 @@ Because strategy is **RollingUpdate**:
 ```bash
 kubectl rollout history deployment javawebappdep -n test-ns --revision=2
 ```
+<img width="889" height="461" alt="image" src="https://github.com/user-attachments/assets/7877d0e2-fb12-468d-bc4a-6c0d02ee4dbd" />
 
 ---
 
@@ -271,7 +277,10 @@ Rollout process shows:
    Even rollbacks get a new revision number.
    Rollback to revision 3 → logged as revision 5.
 
-6. **Rolling back to Revision 1**
+   <img width="841" height="491" alt="image" src="https://github.com/user-attachments/assets/b33eebea-d221-46b1-96cc-bb79e7d95339" />
+
+
+7. **Rolling back to Revision 1**
 
    ```bash
    kubectl rollout undo deployment javawebappdeploy -n test-ns --to-revision=1
@@ -280,6 +289,9 @@ Rollout process shows:
 ---
 
 ## 2. RollingUpdate Strategy (Default in Kubernetes)
+
+<img width="886" height="485" alt="image" src="https://github.com/user-attachments/assets/0736f16d-dd03-4dab-b089-af21553ce50b" />
+
 
 ### Overview
 
