@@ -294,6 +294,7 @@ Open two terminals:
 watch kubectl get po
 watch kubectl get hpa
 ```
+<img width="1749" height="487" alt="image" src="https://github.com/user-attachments/assets/24726c2c-a2c8-4492-b704-cdc815af8434" />
 
 Initially:
 
