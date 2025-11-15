@@ -165,32 +165,30 @@ Create `hpa-demo.yaml` containing Deployment, HPA, and Service.
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hpadeployment
-  labels:
-    name: hpadeployment
+  name: my-deployment
+  namespace: test
 spec:
   replicas: 1
   selector:
     matchLabels:
-      name: hpapod
+      app: my-app
   template:
     metadata:
       labels:
-        name: hpapod
+        app: my-app
     spec:
       containers:
-      - name: hpacontainer
-        image: k8s.gcr.io/hpa-example
+      - name: my-container
+        image: satyamolleti4599/maven-web-app:1.0.0
         ports:
-        - name: http
-          containerPort: 80
+        - containerPort: 8080
         resources:
           requests:
-            cpu: "100m"
             memory: "64Mi"
-          limits:
             cpu: "100m"
+          limits:
             memory: "128Mi"
+            cpu: "100m"
 ```
 
 Important:
@@ -207,14 +205,15 @@ Important:
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: hpadeploymentautoscaler
+  name: my-hpa
+  namespace: test
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: hpadeployment
+    name: my-deployment 
   minReplicas: 2
-  maxReplicas: 4
+  maxReplicas: 5
   metrics:
   - type: Resource
     resource:
@@ -228,6 +227,7 @@ spec:
       target:
         type: Utilization
         averageUtilization: 80
+
 ```
 
 Key Points:
