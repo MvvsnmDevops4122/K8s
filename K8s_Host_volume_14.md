@@ -184,9 +184,3 @@ spec:
     - port: 27017
       targetPort: 27017
 ```
-
-✅ A **StatefulSet version** of the same example
-✅ A **PV + PVC version** for production
-✅ A **full README.md** combining volumes + StatefulSet + Spring Boot + MongoDB
-
-Just tell me!
