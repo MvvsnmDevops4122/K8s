@@ -360,6 +360,23 @@ kubeadm init
 
 IF Error
 \#sudo kubeadm init --cri-socket /run/containerd/containerd.sock
+
+1) Install conntrack
+sudo apt-get update
+# try the common package name first
+sudo apt-get install -y conntrack || sudo apt-get install -y conntrack-tools
+
+
+Verify it exists:
+
+which conntrack || conntrack --help
+
+
+If apt says package not found, enable universe and try again:
+
+sudo add-apt-repository universe
+sudo apt-get update
+sudo apt-get install -y conntrack
 ```
 
 # Step 2: Configure kubeconfig for kubectl
