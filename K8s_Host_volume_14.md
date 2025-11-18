@@ -55,7 +55,7 @@ spec:
     spec:
       containers:
       - name: mongocon
-        image: mongo
+        image: mongo:8.0.9-noble
         ports:
         - containerPort: 27017
         env:
@@ -87,7 +87,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: springapp
-  namespace: test-ns 
+  namespace: test 
 spec:
   replicas: 2
   selector: 
@@ -115,7 +115,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: springappsvc
-  namespace: test-ns
+  namespace: test
 spec:
   type: NodePort
   selector:
@@ -142,7 +142,7 @@ apiVersion: apps/v1
 kind: ReplicaSet
 metadata: 
   name: mongodb
-  namespace: test-ns
+  namespace: test
 spec:
   replicas: 1
   selector: 
@@ -155,7 +155,7 @@ spec:
     spec:
       containers:
       - name: mongocon
-        image: mongo
+        image: mongo:8.0.9-noble
         ports:
         - containerPort: 27017
         env:
@@ -175,7 +175,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: mongosvc
-  namespace: test-ns
+  namespace: test
 spec:
   type: ClusterIP
   selector:
