@@ -9,7 +9,7 @@
 
 * It is a cluster-scoped resource, It is independent of any specific pod or namespace.
 
-* PVs define the actual storage resource, including its capacity, access modes (e.g., ReadWriteOnce, ReadOnlyMany, ReadWriteMany), and reclaim policy (e.g., Retain, Recycle, Delete).
+* PV defines storage size, access modes (ReadWriteOnce / ReadOnlyMany / ReadWriteMany) and reclaim policy (Retain / Recycle / Delete).
 
 * Supports multiple storage backends like NFS, EBS, iSCSI, HostPath, etc.
 
@@ -21,7 +21,7 @@
 
 * It is a namespaced resource, so it belongs to a specific namespace.
 
-* PVCs specify the desired characteristics of the storage, such as the required capacity, access modes, and optionally a StorageClass.
+* PVC specifies required size, access mode, and optional StorageClass.
 
 * When a PVC is created, Kubernetes attempts to find a suitable PV that matches the PVC's requirements and binds the PVC to that PV.
 
