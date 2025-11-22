@@ -1,7 +1,7 @@
-# 📘 **Kubernetes NFS Volume
+# 📘 **Kubernetes NFS Volume**
 ---
 
-# ⭐ 1️⃣ What is an NFS Server?
+# 1️⃣ What is an NFS Server?
 
 **NFS = Network File System**
            
@@ -16,7 +16,7 @@ An NFS server is a machine that shares a folder over the network, allowing other
 
 ---
 
-# ⭐ 2️⃣ Why NFS is Needed in Kubernetes?
+# 2️⃣ Why NFS is Needed in Kubernetes?
 
 Kubernetes Pods run on **different Nodes**, and each node has its own local filesystem.
 
@@ -40,7 +40,7 @@ Kubernetes Pods run on **different Nodes**, and each node has its own local file
 
 ---
 
-# ⭐ 3️⃣ NFS Working Diagram (Very Simple)
+# 3️⃣ NFS Working Diagram (Very Simple)
 
 ```
          ┌──────────────────┐
@@ -66,7 +66,7 @@ So **any pod** can read/write the same data.
 
 ---
 
-# ⭐ 4️⃣ How to Setup an NFS Server (Simple)
+# 4️⃣ How to Setup an NFS Server (Simple)
 
 ### ✔ Step 1: Launch an Ubuntu EC2 machine
 
@@ -119,7 +119,7 @@ ps -ef | grep nfs
 
 ---
 
-# ⭐ 5️⃣ Setup NFS Client on Kubernetes Nodes
+# 5️⃣ Setup NFS Client on Kubernetes Nodes
 
 ### Install NFS client package:
 
@@ -255,7 +255,7 @@ kubectl apply -f mongo.yaml
 ```
 ---
 
-# ⭐ 6️⃣ Why This Setup Works Perfectly
+# 6️⃣ Why This Setup Works Perfectly
 
 ### ✔ MongoDB uses NFS → data persists
 
