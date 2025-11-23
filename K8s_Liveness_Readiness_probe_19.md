@@ -2,7 +2,7 @@
 
 ## Overview
 
-Kubernetes uses **Liveness** and **Readiness** probes to monitor the health of containers inside a Pod.
+Liveness and Readiness Probes are mechanisms in Kubernetes used to check the health and status of containers inside the Pod.
 
 These probes ensure:
 
