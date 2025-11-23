@@ -301,3 +301,100 @@ If pod was stuck earlier (Pending → ConfigMap error):
 * **MongoDB service = Ready**
 
 Your MongoDB is now fully deployed with persistent storage + config + secret management.
+
+### Spring App YAML (using ConfigMap + Secret)(up application)
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: springapp
+  namespace: test
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: springapp
+  template:
+    metadata:
+      labels:
+        app: springapp
+    spec:
+      containers:
+      - name: springapp
+        image: kkeducation12345/spring-app:1.0.0
+        ports:
+        - containerPort: 8080
+        env:
+        # MongoDB Hostname - using Service name
+        - name: MONGO_DB_HOSTNAME
+          value: mongosvc          # MongoDB Service in 'prod' namespace
+
+        # MongoDB Username from ConfigMap
+        - name: MONGO_DB_USERNAME
+          valueFrom:
+            configMapKeyRef:
+              name: springappconfig
+              key: db_username
+
+        # MongoDB Password from Secret
+        - name: MONGO_DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: springappsecret
+              key: db_password
+
+        resources:
+          requests:
+            cpu: 300m
+            memory: 256Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: springappsvc
+  namespace: test
+spec:
+  type: NodePort
+  selector:
+    app: springapp
+  ports:
+  - port: 80          # Service port
+    targetPort: 8080  # Container port
+    # nodePort: 30080 # (optional) fix NodePort if you want
+```
+### 🧪 Commands to apply and verify
+
+```bash
+# 1. Make sure configmap & secret exist in prod
+kubectl get cm -n prod
+kubectl get secret -n prod
+
+# 2. Apply spring app YAML
+kubectl apply -f springapp.yaml
+
+# 3. Check deployment, pods, service
+kubectl get deploy -n prod
+kubectl get po -n prod
+kubectl get svc -n prod
+
+```
+To see what values app gets:
+```bash
+kubectl exec -it <springapp-pod-name> -n prod -- env | grep MONGO_DB
+```
+
+You should see:
+
+MONGO_DB_HOSTNAME=mongosvc
+MONGO_DB_USERNAME=devdb
+MONGO_DB_PASSWORD=devdb@123
+
+### Access the application through nodeip with nodeport
+
+<img width="1917" height="963" alt="{F2AA3952-8880-412D-BEAE-35FEB763F080}" src="https://github.com/user-attachments/assets/80f28ebf-d100-4ae5-a399-8aa7396ec7e0" />
+
+
