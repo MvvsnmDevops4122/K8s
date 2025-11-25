@@ -37,8 +37,8 @@ After that, Kubernetes handles:
 ## 2. Key Features of Deployments
 
 * **Replica Management** – Ensures the specified number of Pods are always running.  
-* **Rolling Updates** – Updates applications gradually with minimal or no downtime.  
-* **Rollback Capability** – Easily revert to a previous version if a rollout fails.  
+* **Rolling Updates** – Gradually replace old Pods with new ones without any downtime.  
+* **Rollback Capability** – If an update causes issues, Kubernetes automatically restores the previous stable version. 
 * **Declarative Scaling** – Adjust the number of replicas by changing a single field in the YAML file.  
 
 <img width="940" height="413" alt="image" src="https://github.com/user-attachments/assets/549ba0c4-37ff-4aa7-9854-2324a7beab5a" />
