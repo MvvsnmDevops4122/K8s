@@ -254,7 +254,7 @@ spec:
 
 ### Application Access
 ---
-
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -302,3 +302,4 @@ spec:
  ports:
  - port: 80
    targetPort: 8080
+```
