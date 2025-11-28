@@ -12,20 +12,20 @@ They help secure your cluster by allowing only authorized and required traffic.
 
 ### **1. Namespaces**
 
-Network Policies apply **within a specific namespace**.
-Different namespaces can have different rules.
+Network Policies are applied within a specific namespace. You can create different policies for different namespaces.
 
 ### **2. Selectors**
 
-Used to choose which pods or namespaces the policy applies to.
+Network Policies use selectors to determine which pods or namespaces the policy applies to.
 
-* **Pod Selector** → selects specific pods
-* **Namespace Selector** → selects pods based on namespace labels
+* **Pod Selector** → Specifies the pods that the policy applies to.
+* **Namespace Selector** → Specifies the namespaces that the policy applies to.
 
 ### **3. Rule Types**
 
-* **Ingress Rules** → control **incoming** traffic
-* **Egress Rules** → control **outgoing** traffic
+**Ingress Rules** -> Control incoming traffic to the selected pods.
+
+**Egress Rules**  -> Control outgoing traffic from the selected pods.
 
 ### **4. Policy Types**
 
