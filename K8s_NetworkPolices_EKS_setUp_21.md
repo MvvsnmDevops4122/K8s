@@ -231,48 +231,7 @@ How to connect a pod in one namespace to a pod/service in another namespace?
 
 ---
 
-# Example 1: General Network Policy
-
-```yaml
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  name: test-network-policy
-  namespace: prod
-spec:
-  podSelector:
-    matchLabels:
-      app: springapp
-  policyTypes:
-  - Ingress
-  - Egress
-  ingress:
-  - from:
-    - ipBlock:
-        cidr: 172.17.0.0/16
-        except:
-        - 172.17.1.0/24
-    - namespaceSelector:
-        matchLabels:
-          project: myproject
-    - podSelector:
-        matchLabels:
-          role: frontend
-    ports:
-    - protocol: TCP
-      port: 6379
-  egress:
-  - to:
-    - ipBlock:
-        cidr: 10.0.0.0/24
-    ports:
-    - protocol: TCP
-      port: 5978
-```
-
----
-
-# Example 2: Network Policy for Our App
+# Example 1: Network Policy for Our App
 
 Allow only **Spring App** to access **MongoDB**.
 
@@ -327,6 +286,72 @@ Because only **springapp** is allowed.
 
 ---
 
+# ✅ **What this NetworkPolicy means (one-by-one simple explanation)**
+
+```
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: mongodb-policy
+  namespace: prod
+```
+
+✔ This policy is created **in the prod namespace**.
+✔ The policy name is **mongodb-policy**.
+
+---
+
+```
+spec:
+  podSelector:
+    matchLabels:
+      app: mongodb
+```
+
+✔ This policy **applies only to pods with label `app=mongodb`** in the **prod** namespace.
+✔ Means: “I am protecting the MongoDB pod.”
+
+---
+
+```
+  policyTypes:
+  - Ingress
+```
+
+✔ This policy controls **incoming traffic to MongoDB** (Ingress = traffic coming into this pod).
+
+---
+
+```
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: springapp
+```
+
+✔ Only pods with label **app=springapp** (inside **same namespace**) are allowed to connect to MongoDB.
+✔ All other pods are **blocked**.
+
+---
+
+```
+    ports:
+    - protocol: TCP
+      port: 27017
+```
+
+✔ Only allow traffic on **TCP port 27017**, which is the default port of MongoDB.
+
+---
+
+**Only pods labeled `app=springapp` can access the MongoDB pod (app=mongodb) on port 27017 inside the prod namespace; all other pods are blocked.**
+
+---
+
+# Want explanation with diagram or namespace-selector example?
+
+---
 # Allow Java Web App Also
 
 Add additional podSelector:
