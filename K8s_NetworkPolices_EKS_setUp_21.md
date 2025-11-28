@@ -6,6 +6,8 @@ They define rules that determine how pods can connect to each other and to other
 
 They help secure your cluster by allowing only authorized and required traffic.
 
+It is a Kubernetes object.
+
 ---
 
 ## 🔑 Key Concepts of Network Policies
