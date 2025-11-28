@@ -222,7 +222,9 @@ Test:
 kubectl exec -it nginx -- bash
 curl -v telnet://mongosvc.prod.svc.cluster.local:27017   # Connected
 ```
-
+---
+How to connect a pod in one namespace to a pod/service in another namespace?
+➡️ Use the service FQDN: <service-name>.<namespace>.svc.cluster.local.(fully qualify domain name)
 ---
 
 # Applying Network Policies
