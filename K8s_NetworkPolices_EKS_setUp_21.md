@@ -389,13 +389,36 @@ kubectl get netpol -n test-ns
 ```
 
 ---
+## NetworkPolicy Using namespaceSelector (prod namespace)
 
-# Add NamespaceSelector
+📌 Step 1: Add label to the namespace
 
-Example:
+Kubernetes needs labels on namespaces so NetworkPolicies can match them.
 
-```yaml
-- namespaceSelector:
-    matchLabels:
-      ns: test-ns
+```bash
+kubectl label namespace prod name=prod
 ```
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: mongodb policy
+  namespace: prod
+spec:
+  podSelector:
+    matchLabels:
+      app: mongodb        # Target: MongoDB pod
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: prod  # Allow only prod namespace
+    ports:
+    - protocol: TCP
+      port: 27017         # Allow MongoDB port
+```
+### 🧠 Simple Meaning in One Line
+
+Only pods inside the frontend namespace can connect to the mongodb pod in the prod namespace on port 27017; traffic from any other namespace is blocked.
