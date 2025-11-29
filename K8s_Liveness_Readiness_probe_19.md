@@ -104,6 +104,70 @@ spec:
 kubectl apply -f live_readyness.yaml
 kubectl get all -n test
 ```
+---
+### ✅ Explanation of the Given Probes
+
+# 1️⃣ Liveness Probe
+
+livenessProbe:
+  httpGet:
+    path: /maven-web-application
+    port: 8080
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  failureThreshold: 3
+
+Meaning
+
+A livenessProbe tells Kubernetes whether the application is alive or stuck.
+If this probe fails, Kubernetes will restart the container.
+
+Your configuration explanation
+
+httpGet: Kubernetes will check the URL http://pod-ip:8080/maven-web-application
+
+initialDelaySeconds: 30
+Wait 30 seconds after container starts before doing the first check.
+
+periodSeconds: 10
+Check the health every 10 seconds.
+
+failureThreshold: 3
+If the application fails 3 consecutive checks, Kubernetes will restart the container.
+
+Purpose
+
+This ensures the application is not hung or stuck.
+If the app stops responding, Kubernetes automatically restarts it.
+
+# 2️⃣ Readiness Probe
+readinessProbe:
+  httpGet:
+    path: /maven-web-application
+    port: 8080
+  initialDelaySeconds: 15
+  periodSeconds: 5
+  failureThreshold: 3
+
+Meaning
+
+A readinessProbe tells Kubernetes whether the application is ready to serve traffic.
+If this probe fails, Kubernetes stops sending traffic to this pod.
+
+Your configuration explanation
+
+initialDelaySeconds: 15
+Wait 15 seconds before the first readiness check.
+
+periodSeconds: 5
+Check every 5 seconds if the app is ready.
+
+failureThreshold: 3
+
+Purpose
+
+Before the app is fully started, Kubernetes will not send traffic until this probe passes.
+If the app becomes slow or overloaded later, Kubernetes temporarily removes the pod from the service.
 
 ---
 
