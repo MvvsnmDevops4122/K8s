@@ -158,6 +158,7 @@ Create an IAM policy with the following JSON:
 4. Search and select `ClusterAutoScalerPolicy`.
 5. Click **Add permissions**.
 
+OTHER ROLE ALSO: IAM -- ROLE -- eksctl-my-demo-cluster-2-nodegroup-NodeInstanceRole-LIDymFGMQ6a9
 ---
 
 ### Step 3: Install the Cluster Autoscaler in EKS
